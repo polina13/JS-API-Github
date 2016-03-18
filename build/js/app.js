@@ -2,18 +2,14 @@
 exports.apiKey = "b09e508d968731fa5afdaf5afa56d9e572f26348";
 
 },{}],2:[function(require,module,exports){
-exports.Repos = function (response) {
-  this.repoInfo = response.repos_url;
-}
-
-},{}],3:[function(require,module,exports){
 exports.User = function (response) {
   this.username = response.login;
   this.locationUser = response.location;
   this.userPic = response.avatar_url;
-}
+  this.reposURL = response.repos_url;
+};
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 var User = require('./../js/user.js').User;
 var apiKey  = require('./../.env').apiKey;
 
@@ -24,19 +20,26 @@ $(document).ready(function(){
 
     $.get('https://api.github.com/users/'+username+'?access_token=' + apiKey).then(function(response){
       var userGitHub = new User(response);
-      console.log(response);
 
       $("#name").append("<img src='"+userGitHub.userPic + "'/>");
       $("#showGitHubName").append('<h1>' + userGitHub.username + '</h1>');
       $("#showDescription").append('<p>' + userGitHub.locationUser + '</p>');
+      console.log(response);
+
+      $.get('userGitHub.reposURL', function(response) {
+        console.log(response);
+
+
+          for(var i=0; i<response.length; i++) {
+            $("#repoNameInput").append('<h3>' + response[i].name + '</h3>');
+          }
+      })
+
     }).fail(function(error){
       console.log(error.responseJSON.message);
+
     })
   });
-
 });
 
-var Repos = require('./../js/repos.js').Repos;
-var apiKey  = require('./../.env').apiKey;
-
-},{"./../.env":1,"./../js/repos.js":2,"./../js/user.js":3}]},{},[4]);
+},{"./../.env":1,"./../js/user.js":2}]},{},[3]);
