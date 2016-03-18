@@ -1,9 +1,9 @@
 {
-  "name": "JS-Alarm",
+  "name": "GitHubLookUp",
   "description": "",
   "main": "index.js",
   "authors": [
-    "polina nenchev and alissa paluska"
+    "polina nenchev"
   ],
   "license": "ISC",
   "moduleType": [],
