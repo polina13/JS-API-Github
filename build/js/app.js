@@ -2,35 +2,41 @@
 exports.apiKey = "b09e508d968731fa5afdaf5afa56d9e572f26348";
 
 },{}],2:[function(require,module,exports){
-var apiKey = require('./../.env').apiKey;
+exports.Repos = function (response) {
+  this.repoInfo = response.repos_url;
+}
 
-exports.lookUpSearch =  function(username) {
-  this.username = username;
-};
+},{}],3:[function(require,module,exports){
+exports.User = function (response) {
+  this.username = response.login;
+  this.locationUser = response.location;
+  this.userPic = response.avatar_url;
+}
 
-exports.lookUp.prototype.locateUser = function() {
-  return 'https://api.github.com/users/' + username + '/repos?access_token=' + apiKey;
-};
-
-},{"./../.env":1}],3:[function(require,module,exports){
-
-var lookUp = require('./../js/lookUp.js').lookUpSearch;
+},{}],4:[function(require,module,exports){
+var User = require('./../js/user.js').User;
+var apiKey  = require('./../.env').apiKey;
 
 $(document).ready(function(){
-  $('#submitusername').submit(function(){
-    var inputUsername = $('#userName').val();
-    var newUser = new gitHub(inputUsername);
-    $.get(newUser.locateUser(), function(response) {
-    	$('#name').prepend("<h3>The repos for " + inputUsername + " are :</h3><hr>");
-    	for (var i=0; i<response.length; i++) {
-        $('#showGitHubName').append("<h4>" + response[i].name + "</h4><br>" + response[i].description + "<br><hr>");
-	    }
-    }).fail(function(error) {
-      $('#name').text(error.responseJSON.message);
-    });
-    $('#name').empty();
-    $('#showGitHubName').empty();
+  $("#submit-username").click(function() {
+    var username = $("#userNameInput").val();
+    $("#userNameInput").val("");
+
+    $.get('https://api.github.com/users/'+username+'?access_token=' + apiKey).then(function(response){
+      var userGitHub = new User(response);
+      console.log(response);
+
+      $("#name").append("<img src='"+userGitHub.userPic + "'/>");
+      $("#showGitHubName").append('<h1>' + userGitHub.username + '</h1>');
+      $("#showDescription").append('<p>' + userGitHub.locationUser + '</p>');
+    }).fail(function(error){
+      console.log(error.responseJSON.message);
+    })
   });
+
 });
 
-},{"./../js/lookUp.js":2}]},{},[3]);
+var Repos = require('./../js/repos.js').Repos;
+var apiKey  = require('./../.env').apiKey;
+
+},{"./../.env":1,"./../js/repos.js":2,"./../js/user.js":3}]},{},[4]);
