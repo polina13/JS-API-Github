@@ -13,7 +13,9 @@ exports.User = function (response) {
 var User = require('./../js/user.js').User;
 var apiKey  = require('./../.env').apiKey;
 
+
 $(document).ready(function(){
+  var userGitHub;
   $("#submit-username").click(function() {
     var username = $("#userNameInput").val();
     $("#userNameInput").val("");
@@ -24,22 +26,20 @@ $(document).ready(function(){
       $("#name").append("<img src='"+userGitHub.userPic + "'/>");
       $("#showGitHubName").append('<h1>' + userGitHub.username + '</h1>');
       $("#showDescription").append('<p>' + userGitHub.locationUser + '</p>');
-      console.log(response);
 
-      $.get('userGitHub.reposURL', function(response) {
+      $.get(userGitHub.reposURL, function(response) {
         console.log(response);
 
 
           for(var i=0; i<response.length; i++) {
-            $("#repoNameInput").append('<h3>' + response[i].name + '</h3>');
+            $("#repoNameInput").append('<h3>' + response[i].name + '</h3>' + '<p>' + response[i].description + '</p>');
           }
       })
-
-    }).fail(function(error){
+      .fail(function(error){
       console.log(error.responseJSON.message);
-
-    })
-  });
+  })
+})
+});
 });
 
 },{"./../.env":1,"./../js/user.js":2}]},{},[3]);
