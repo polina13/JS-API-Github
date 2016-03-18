@@ -7,6 +7,7 @@ exports.User = function (response) {
   this.locationUser = response.location;
   this.userPic = response.avatar_url;
   this.reposURL = response.repos_url;
+  this.userName = response.name;
 };
 
 },{}],3:[function(require,module,exports){
@@ -24,6 +25,7 @@ $(document).ready(function(){
       var userGitHub = new User(response);
 
       $("#name").append("<img src='"+userGitHub.userPic + "'/>");
+      $("#full-name").append('<h1>' + userGitHub.userName + '</h1>');
       $("#showGitHubName").append('<h1>' + userGitHub.username + '</h1>');
       $("#showDescription").append('<p>' + userGitHub.locationUser + '</p>');
 

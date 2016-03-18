@@ -1,9 +1,11 @@
-# Title
+# Git Hub Look Up
+* Code Review for Epicodus
 
-#### By Author/s
+#### Polina Nenchev, March 18th, 2016
 
 ## Description
 
+This app will allow the user GitHub name and repositories associated with it.
 
 
 ## Prerequisites
@@ -29,7 +31,7 @@ You will need the following things properly installed on your computer.
 
 ### Legal
 
-Copyright (c) 2016 **Author/s**
+Copyright (c) 2016 *Polina Nenchev**
 
 This software is licensed under the MIT license.
 
